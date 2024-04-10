@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserController extends AbstractController
 {
@@ -31,7 +32,8 @@ class UserController extends AbstractController
     }
 
     #[Route(path: '/register', name: 'app_register')]
-    public function register(EntityManagerInterface $entityManager, ValidatorInterface $validator, Request $request): Response
+    public function register(EntityManagerInterface $entityManager, ValidatorInterface $validator,
+    UserPasswordHasherInterface $passwordHasher, Request $request): Response
     {
         $user = new User();
 
@@ -41,8 +43,9 @@ class UserController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
+            /** @var User $user*/
             $user = $form->getData();
-
+            $user->setPassword($passwordHasher->hashPassword($user, $user->getPassword()));
             $errors = $validator->validate($user);
 
             if (count($errors) == 0) 
@@ -57,7 +60,7 @@ class UserController extends AbstractController
         }
 
         return $this->render('login/register.html.twig', [
-            'form' => $form 
+            'form' => $form
         ]);
     }
 

@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Task Manager - Announcements{% endblock %}
+{% block stylesheets %}
+{% endblock %}
+
+{% block body %}
+<div class="w-50 m-auto">
+    {% for announcement in announcements %}
+        <div id="announcement">
+            <h3>announcement.getTitle()</h3>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
