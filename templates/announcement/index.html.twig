@@ -5,11 +5,19 @@
 {% endblock %}
 
 {% block body %}
-<div class="w-50 m-auto">
+<div class="w-50 m-auto d-flex flex-column">
     {% for announcement in announcements %}
-        <div id="announcement">
-            <h3>announcement.getTitle()</h3>
+        <div id="announcement" class="border rounded m-2 p-2 d-flex justify-content-between">
+            <a href="/home/announcement/{{ announcement.getId() }}">
+                <h3>{{ announcement.getTitle() }}</h3>
+            </a>
+            {% if app.user.getUserIdentifier() == announcement.getAuthorIdentifier() %}
+                <div>
+                    <a href="/home/announcement/remove/{{ announcement.getId() }}" class="btn btn-danger">Delete</a>
+                </div>
+            {% endif %}
         </div>
     {% endfor %}
+    <a href="/home/announcement/add" class="btn btn-primary">Add announcement</a>
 </div>
 {% endblock %}

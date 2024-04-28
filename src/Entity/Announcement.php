@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\AnnouncementRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Form\FormTypeInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AnnouncementRepository::class)]
 class Announcement
@@ -13,8 +15,8 @@ class Announcement
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $userId = null;
+    #[ORM\Column(length: 180)]
+    private ?string $authorIdentifier = null;
 
     #[ORM\Column(length: 255)]
     private ?string $title = null;
@@ -27,14 +29,14 @@ class Announcement
         return $this->id;
     }
 
-    public function getUserId(): ?int
+    public function getAuthorIdentifier(): ?string
     {
-        return $this->userId;
+        return $this->authorIdentifier;
     }
 
-    public function setUserId(int $userId): static
+    public function setAuthorIdentifier(string $authorIdentifier): static
     {
-        $this->userId = $userId;
+        $this->authorIdentifier = $authorIdentifier;
 
         return $this;
     }
