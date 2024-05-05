@@ -7,6 +7,11 @@
 {% block body %}
 <div class="w-25 m-auto">
     <h3>{{ announcement.getTitle() }}</h3>
-    <p>{{ announcement.getContent() }}</p>
+    <div class="content my-3">
+        {% for line in content %}
+            {{ line }}<br>
+        {% endfor %}
+    </div>
+    <a href="/home/announcement" class="btn btn-primary float-end">Come back</a>
 </div>
 {% endblock %}

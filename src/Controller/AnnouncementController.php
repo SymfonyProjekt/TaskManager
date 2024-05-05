@@ -61,8 +61,12 @@ class AnnouncementController extends AbstractController
     #[Route(path: '/home/announcement/{id}', name: 'app_announcement_view')]
     public function view(Announcement $announcement): Response | RedirectResponse
     {
+        /**@var string[] content*/
+        $content = explode("\n", $announcement->getContent());
+
         return $this->render('announcement/view.html.twig', [
-            "announcement" => $announcement
+            "announcement" => $announcement,
+            "content" => $content
         ]);
     }
 }
